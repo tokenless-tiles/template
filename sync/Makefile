@@ -1,12 +1,12 @@
 clean:
 	rm index-v1-nogeom.json parents ids
-index-v1-nogeom.json:
-	curl -O https://download.geofabrik.de/index-v1-nogeom.json
+index-v1.json:
+	curl -O https://download.geofabrik.de/$@
 
-parents: index-v1-nogeom.json
+parents: index-v1.json
 	<$< jq -r '.features[]|.properties.parent' | sort -u >$@
 
-ids: index-v1-nogeom.json
+ids: index-v1.json
 	<$< jq -r '.features[]|.properties.id' | sort -u >$@
 
 extracts: ids parents
